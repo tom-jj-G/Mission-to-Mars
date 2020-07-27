@@ -13,14 +13,28 @@ mongo = PyMongo(app)
 @app.route("/")
 def index():
    mars = mongo.db.mars.find_one()
-   return render_template("index.html", mars=mars)
+   hemi_list = list(mongo.db.hemispheres.find({}))
+   hemispheres = mongo.db.hemispheres.find_one()
+   return render_template("index.html", mars=mars, hemi_list=hemi_list)
 
 # Scrapping route
 @app.route("/scrape")
 def scrape():
    mars = mongo.db.mars
    mars_data = scraping.scrape_all()
+   hemispheres = mongo.db.hemispheres
+   mars_data, hemi_list = scraping.scrape_all()
    mars.update({}, mars_data, upsert=True)
+   for hemi in hemi_list:
+      hemispheres.update_one(
+         {'title':hemi.get('title')},
+         {
+            '$set':{
+               'img_url':hemi.get('img_url')
+            }
+         },
+         upsert=True)
+
    return "Scraping Successful!"
 
 if __name__ == "__main__":

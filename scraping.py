@@ -19,10 +19,13 @@ def scrape_all():
       "last_modified": dt.datetime.now()
     }
 
+    # Retrieve hemisphere data
+    hemi_list = mars_hemispheres(browser)
+
     # Stop webdriver and return data
     browser.quit()
-
-    return data
+    
+    return data, hemi_list
 
 
 # ### Featured Text
@@ -98,6 +101,58 @@ def mars_facts():
     return df.to_html()
 
 
+# ### Mars Hemispheres
+# #### Scrappingt Hemispheres data
+def mars_hemispheres(browser):
+    # Visit URL
+    url = 'https://astrogeology.usgs.gov/search/results?q=hemisphere+enhanced&k1=target&v1=Mars'
+    browser.visit(url)
+    # Parsing html
+    html = browser.html
+    results = soup(html, 'html.parser')
+    #Finding the list of hemispheres to scrap
+    hemi_to_scrap=[]
+    results = results.find_all('h3')
+    for hemi in results:
+        hemi_to_scrap.append(hemi.text)
+    # List of Mars hemispheres with scraped title and full resolution image url
+    hemi_list=[]
+    for hemi_name in hemi_to_scrap:
+        hemi_title,hemi_img_url = rech_info_hemi(hemi_name,browser)
+        # Appending hemispheres list
+        hemi_dict={"title":hemi_title,'img_url':hemi_img_url}
+        hemi_list.append(hemi_dict)
+    
+    return hemi_list
+
+# #### Hemisphere external function
+def rech_info_hemi(name,browser):
+    #Visit URL
+    url = 'https://astrogeology.usgs.gov/search/results?q=hemisphere+enhanced&k1=target&v1=Mars'
+    browser.visit(url)
+    # Finding Cerberus link and clicking on it
+    browser.is_element_present_by_text(name, wait_time=1)
+    hemis_info_elem = browser.links.find_by_partial_text(name)
+    hemis_info_elem.click()
+    # Parsing html
+    html = browser.html
+    hemi_soup = soup(html, 'html.parser')
+    # Add try/except for error handling
+    try:
+        # Finding title
+        hemi_content = hemi_soup.find("div", class_='content')
+        hemi_title = hemi_content.find("h2", class_='title').get_text()
+        # Finding full resolution image url - 
+        # .jpg selected as .tiff one cannot be displayed on Chrome
+        hemi_content = hemi_soup.find("div", class_='downloads')
+        hemi_img_url = hemi_content.find("a")['href']
+    except AttributeError:
+        return None
+
+    return hemi_title,hemi_img_url
+
+
 # If running as script, print scraped data
 if __name__ == "__main__":
     print(scrape_all())
+

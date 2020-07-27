@@ -19,27 +19,68 @@
         <!-- Mars News -->
         <div class="row" id="mars-news">
             <div class="col-md-12">
-                <div class="media">
-                    <div class="media-body">
-                        <h2>Latest Mars News</h2>
-                        <h4 class="media-heading">{{mars.news_title}}</h4>
-                        <p>{{ mars.news_paragraph }}</p>
-                    </div>
+                <div class="alert alert-danger" role="alert">
+                    <h2 class="alert-heading">Latest Mars News</h2>
+                    <hr>
+                    <h4>{{mars.news_title}}</h4>
+                    <p class="mb-0">{{ mars.news_paragraph }}</p>
                 </div>
             </div>
         </div>
         <!-- Featured Image --> 
         <div class="row" id="mars-featured-image">
             <div class="col-md-8">
-                <h2>Featured Mars Image</h2>
+                <h2>Featured Mars Image <span class="badge badge-secondary">New</span></h2>
                 <img src="{{ mars.featured_image }}" class="img-responsive" alt="Responsive image"/>
             </div>
             <div class="col-md-4">
                 <!-- Mars Facts -->
-                <div class="row" id="mars-facts">
-                    <h4>Mars Facts</h4>
-                    {{ mars.facts | safe }}
+                <div class="jumbotron jumbotron-fluid">
+                    <div class="row" id="mars-facts">
+                        <h4>Mars Facts</h4>
+                        {{ mars.facts | safe }}
+                    </div>
                 </div>
+            </div>
+        </div>
+        <!-- Mars Hemispheres -->
+        <div class="row" id="mars-news">
+            <div class="col-md-12">
+                <div class="media">
+                    <div class="media-body">
+                        <h2>Mars Hemispheres images</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Mars Hemispheres Titles-->
+        <div class="row" id="mars-hemispheres-tiles">
+            <div class="col-md-3">
+                <h4>{{hemi_list[0].title}}</h4>
+            </div>
+            <div class="col-md-3">
+                <h4>{{hemi_list[1].title}}</h4>
+            </div>
+            <div class="col-md-3">
+                <h4>{{hemi_list[2].title}}</h4>
+            </div>
+            <div class="col-md-3">
+                <h4>{{hemi_list[3].title}}</h4>
+            </div>
+        </div>
+        <!-- Mars Hemispheres Images-->
+        <div class="row" id="mars-hemispheres-images">
+            <div class="col-md-3">
+                <img src={{hemi_list[0].img_url}} class="img-thumbnail" alt="Responsive image"/>
+            </div>
+            <div class="col-md-3">
+                <img src={{hemi_list[1].img_url}} class="img-thumbnail" alt="Responsive image"/>
+            </div>
+            <div class="col-md-3">
+                <img src={{hemi_list[2].img_url}} class="img-thumbnail" alt="Responsive image"/>
+            </div>
+            <div class="col-md-3">
+                <img src={{hemi_list[3].img_url}} class="img-thumbnail" alt="Responsive image"/>
             </div>
         </div>
     </div>
