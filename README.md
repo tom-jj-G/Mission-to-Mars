@@ -16,12 +16,12 @@
 ## Note
 
 - a *mars_app* datable need to be created before launching the app
-- for hemispheres images, .jpg have been selected as .tiff ones (those with the best image quality) cannot be displayed on Chrome (https://en.wikipedia.org/wiki/Comparison_of_web_browsers#Image_format_support)
+- for hemispheres images, .jpg have been selected as .tiff ones (those with the best image quality) cannot be displayed on Chrome (for more detail, cf. https://en.wikipedia.org/wiki/Comparison_of_web_browsers#Image_format_support)
 
 ## Screenshot of the portofolio
 
 ![Portofolio.png](Images/Portofolio.png)
 
-## Personnal portofolio
+## Personal portofolio
 
 https://github.com/tom-jj-G/portfolio
